@@ -46,6 +46,32 @@ export default {
 <style scoped>
 
 
+.item__body{
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  color: rgba(63, 63, 63, 1);
+  padding: 0 16px;
+}
+.item__tittle{
+  margin: 16px 0 16px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.item__text{
+  width: 300px;
+  flex: 1 1 auto;
+  font-size: 16px;
+  font-weight: 400;
+}
+.item__prise{
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+
 
 
 .rem{

@@ -94,6 +94,7 @@ export default {
   methods:{
     CreateProduct(madeItem){
       this.Items.push(madeItem)
+      document.querySelector('.product_form').classList.remove('active')
       this.Item.title=''
       this.Item.text=''
       this.Item.src=""
@@ -101,17 +102,21 @@ export default {
 
     },
     editItem(Item){
-      for (let i =0;i<this.Items.length;i++){
-        if (this.Items[i].id == Item.id){
-          this.Item.id=this.Items[i].id
-          this.Item.title=this.Items[i].title
-          this.Item.text=this.Items[i].text
-          this.Item.src=this.Items[i].src
-          this.Item.price=this.Items[i].price
-          this.Items.splice(this.Items.indexOf(this.Items[i]),1)
+      if(!document.querySelector('.product_form').classList.contains('active')){
+        document.querySelector('.product_form').classList.add('active')
+        for (let i =0;i<this.Items.length;i++){
+          if (this.Items[i].id == Item.id){
+            this.Item.id=this.Items[i].id
+            this.Item.title=this.Items[i].title
+            this.Item.text=this.Items[i].text
+            this.Item.src=this.Items[i].src
+            this.Item.price=this.Items[i].price
+            this.Items.splice(this.Items.indexOf(this.Items[i]),1)
 
+          }
         }
       }
+
 
 
 
@@ -326,32 +331,6 @@ input::placeholder,textarea::placeholder,input,textarea {
   width: 332px;
   height: 220px;
 }
-.item__body{
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  color: rgba(63, 63, 63, 1);
-  padding: 0 16px;
-}
-.item__tittle{
-  margin: 16px 0 16px;
-  font-size: 20px;
-  font-weight: 600;
-}
-.item__text{
-  width: 300px;
-  flex: 1 1 auto;
-  font-size: 16px;
-  font-weight: 400;
-}
-.item__prise{
-  margin-bottom: 24px;
-  font-size: 24px;
-  font-weight: 600;
-}
-
-
 
 
 </style>
