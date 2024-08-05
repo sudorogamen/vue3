@@ -137,7 +137,7 @@ export default {
         if (this.editSave.id == this.Items[i].id){
           this.Items[i].title = this.Item.title
           this.Items[i].text = this.Item.text
-          this.Items[i].alert = this.Item.src
+          this.Items[i].src = this.Item.src
           this.Items[i].price =this.Item.price
         }
       }
@@ -155,7 +155,7 @@ export default {
         if (this.editSave.id == this.Items[i].id){
           this.Items[i].title = this.editSave.title
           this.Items[i].text = this.editSave.text
-          this.Items[i].alert = this.editSave.src
+          this.Items[i].src = this.editSave.src
           this.Items[i].price =this.editSave.price
         }
       }
