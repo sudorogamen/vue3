@@ -87,6 +87,8 @@ export default {
 }
 .search_products_row {
   border: none;
+  display: none;
+
 }
 .search_products_row.active {
   border: 1px solid rgba(73, 72, 94, 1) ;

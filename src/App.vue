@@ -7,7 +7,7 @@
             <SearchList :Items="Items"/>
           </div>
           <div class="made_product ">
-            <MadeItem  @create="CreateProduct" :Item="Item" />
+            <MadeItem  @create="CreateProduct" @editItem="CreateEditItem" @backEdit="backEdit" :Item="Item" />
           </div>
           <div class="products">
             <Item-list @edit="editItem" @remove="removeItem" :Items="Items"/></div>
@@ -33,6 +33,13 @@ export default {
   },
   data(){
     return{
+      editSave:{
+        id:'',
+        title:'',
+        text:'',
+        src:"",
+        price:''
+      },
       Item:{
         id:'',
         title:'',
@@ -104,23 +111,67 @@ export default {
     editItem(Item){
       if(!document.querySelector('.product_form').classList.contains('active')){
         document.querySelector('.product_form').classList.add('active')
+        document.querySelector('.product_form').classList.add('edit')
+        document.querySelector('.backEdit').classList.add('active')
         for (let i =0;i<this.Items.length;i++){
           if (this.Items[i].id == Item.id){
-            this.Item.id=this.Items[i].id
-            this.Item.title=this.Items[i].title
-            this.Item.text=this.Items[i].text
-            this.Item.src=this.Items[i].src
-            this.Item.price=this.Items[i].price
-            this.Items.splice(this.Items.indexOf(this.Items[i]),1)
-
+            this.editSave.id=this.Items[i].id
+            this.editSave.title = this.Item.title=this.Items[i].title
+            this.editSave.text = this.Item.text=this.Items[i].text
+            this.editSave.src = this.Item.src=this.Items[i].src
+            this.editSave.price = this.Item.price=this.Items[i].price
+            this.Items[i].title = 'Введите изменения'
+            this.Items[i].text = 'Введите изменения'
+            this.Items[i].alert = 'Введите изменения'
+            this.Items[i].price = 'Введите изменения'
           }
         }
       }
-
-
-
-
     },
+    CreateEditItem(){
+      document.querySelector('.product_form').classList.remove('edit')
+      document.querySelector('.product_form').classList.remove('active')
+      document.querySelector('.backEdit').classList.remove('active')
+
+      for (let i =0;i<this.Items.length;i++){
+        if (this.editSave.id == this.Items[i].id){
+          this.Items[i].title = this.Item.title
+          this.Items[i].text = this.Item.text
+          this.Items[i].alert = this.Item.src
+          this.Items[i].price =this.Item.price
+        }
+      }
+      this.editSave.title = this.Item.title=''
+      this.editSave.text = this.Item.text=''
+      this.editSave.src = this.Item.src=""
+      this.editSave.price = this.Item.price=''
+    },
+    backEdit(){
+      document.querySelector('.product_form').classList.remove('edit')
+      document.querySelector('.product_form').classList.remove('active')
+      document.querySelector('.backEdit').classList.remove('active')
+
+      for (let i =0;i<this.Items.length;i++){
+        if (this.editSave.id == this.Items[i].id){
+          this.Items[i].title = this.editSave.title
+          this.Items[i].text = this.editSave.text
+          this.Items[i].alert = this.editSave.src
+          this.Items[i].price =this.editSave.price
+        }
+      }
+      this.editSave.title = this.Item.title=''
+      this.editSave.text = this.Item.text=''
+      this.editSave.src = this.Item.src=""
+      this.editSave.price = this.Item.price=''
+      document.querySelectorAll('.in').forEach(input => {
+        const parent = input.closest('.inputs')
+        if (parent.classList.contains('error')){
+          parent.querySelector('label').remove()
+          parent.classList.remove('error')
+        }})
+    },
+
+
     removeItem(Item){
       for (let i =0;i<this.Items.length;i++){
         if (this.Items[i].id == Item.id){
@@ -203,7 +254,6 @@ button, input[type="submit"] {
   display: inline-block;
   box-shadow: none;
   background-color: transparent;
-  background: none;
   cursor: pointer;
 }
 
@@ -244,7 +294,7 @@ body{
   padding:  32px ;
   display: grid;
   grid-template-columns: 284px auto;
-  grid-template-rows: minmax(100px , auto) auto ;
+  grid-template-rows: auto auto ;
   grid-template-areas:
             'made_product search'
             ' made_product products';
@@ -258,12 +308,13 @@ body{
   grid-area: search;
 }
 
-
 .made_product {
   padding-top: 100px;
   grid-area:made_product ;
   color: rgba(73, 72, 94, 1);
-
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 .made_product form{
   display: flex;
@@ -286,6 +337,7 @@ input::placeholder,textarea::placeholder,input,textarea {
   background: rgba(238, 238, 238, 1);
   height: 36px;
   border-radius: 10px;
+  width: 100%;
 }
 .error input, .error textarea{
   border: red 1px solid;

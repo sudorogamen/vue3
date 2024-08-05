@@ -8,8 +8,11 @@
         <input v-model="Item.src" class="in"  type="text " placeholder="Введите ссылку"></div>
       <div class="inputs price"><p>Цена товара</p>
         <input v-model="Item.price" class="in"  type="text" placeholder="Введите цену"></div>
-      <button type="submit">Добавить товар</button>
+      <button class="addItem" type="submit">Добавить товар</button>
+      <button class="editItem" type="submit">Изменить товар</button>
     </form>
+    <button class="backEdit" @submit.stop @click="backEdit">Отмена</button>
+
 </template>
 
 <script>
@@ -29,6 +32,9 @@ export default {
 
   },
   methods:{
+    backEdit(){
+     this.$emit("backEdit")
+    },
     CreateItem(){
       let form = document.querySelector('.product_form')
 
@@ -59,20 +65,26 @@ export default {
         return result
       }
       if (validation(form)){
-        let madeItem = {
+        if(form.classList.contains('edit')){
+          this.$emit('editItem')
+        }else {
+          let madeItem = {
+          }
+          madeItem.id = Date.now()
+          madeItem.title = this.Item.title
+          madeItem.text = this.Item.text
+          madeItem.src = this.Item.src
+          madeItem.price = this.Item.price
+          this.$emit('create', madeItem )
+
         }
-        madeItem.id = Date.now()
-        madeItem.title = this.Item.title
-        madeItem.text = this.Item.text
-        madeItem.src = this.Item.src
-        madeItem.price = this.Item.price
-        this.$emit('create', madeItem )
 
 
       }
 
 
     },
+
 
   }
 
@@ -86,4 +98,25 @@ export default {
   flex-direction: column;
   gap: 4px;
 }
+form button{
+  display: none;
+}
+.addItem{
+  display: block;
+}
+form.edit .addItem{
+  display: none;
+}
+form.edit .editItem{
+  display: block;
+}
+.backEdit{
+  display: none;
+}
+.backEdit.active{
+  display: block;
+}
+
+
+
 </style>
