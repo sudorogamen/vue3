@@ -5,7 +5,7 @@
         <button @click=edit($event) class="edit">Edit</button>
         <button @click=remove($event) class="rem">X</button>
       </div>
-      <img :src = Item.src alt="ошибка загрузки" />
+      <div class="ItemImg"><img :src=Item.src alt="ошибка загрузки"/></div>
       <div class="item__body">
         <div class="item__tittle">{{ Item.title }}</div>
         <div class="item__text">{{ Item.text }}</div>

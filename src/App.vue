@@ -405,7 +405,7 @@ input::placeholder,textarea::placeholder,input,textarea {
 
 
 
-.item img{
+.item img, .ItemImg{
   width: 332px;
   height: 220px;
 }
